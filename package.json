@@ -1,0 +1,34 @@
+{
+  "name": "linter-mathematica",
+  "main": "./lib/linter-mathematica.coffee",
+  "version": "0.1.0",
+  "bugs": {
+    "url": "https://github.com/teedr/linter-mathematica/issues"
+  },
+  "description": "Linter plugin for Wolfram Mathematica",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/teedr/linter-mathematica#readme",
+  "keywords": [
+    "mathematica",
+    "lint",
+    "linter",
+    "wolfram"
+  ],
+  "license": "MIT",
+  "optionalDependencies": {},
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  },
+  "readme": "# linter-mathematica package\n\nThis Atom package provides a [Linter](https://atom.io/packages/linter) for Mathematica.\n\n## Installation\n\n1. Install the Linter package, following the instructions on [this page](https://atom.io/packages/linter).\n2. `apm install linter-mathematica`\n",
+  "readmeFilename": "README.md",
+  
+  "activationCommands": [],
+  "repository": "https://github.com/teedr/linter-mathematica",
+  "dependencies": {}
+}
