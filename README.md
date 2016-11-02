@@ -8,3 +8,5 @@ This Atom package provides a [Linter](https://atom.io/packages/linter) for Wolfr
 2. clone this repo locally
 3. cd to cloned repo
 4. run `apm link`
+
+Note: This package requires Java to be installed. If needed, install [here](https://www.java.com/en/download). 
