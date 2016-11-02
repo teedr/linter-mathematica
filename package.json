@@ -1,7 +1,7 @@
 {
   "name": "linter-mathematica",
   "main": "./lib/linter-mathematica.coffee",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "bugs": {
     "url": "https://github.com/teedr/linter-mathematica/issues"
   },
