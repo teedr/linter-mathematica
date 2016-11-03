@@ -1,4 +1,4 @@
-{BufferedProcess, CompositeDisposable} = require 'atom'
+{BufferedProcess, CompositeDisposable, Point, TextBuffer} = require 'atom'
 path = require 'path'
 
 module.exports =
@@ -14,31 +14,38 @@ module.exports =
 			lint: (textEditor) =>
 				return new Promise (resolve, reject) =>
 					filePath = textEditor.getPath()
+					buffer = new TextBuffer()
+					buffer.setText(textEditor.getText())
+					warnings = []
+					errors = []
 					results = []
 					process = new BufferedProcess
 						command: "java"
-						args: ["-cp", path.join(__dirname, "fatjar.jar"), "FoxySheep", filePath]
+						args: ["-cp", path.join(__dirname, "mmparser.jar"), "FoxySheep", filePath]
 						stdout: (output) ->
 							lines = output.split('\n')
 							lines.pop()
 							for line in lines
 								# Lines of form:
-								# W true L 22 (C 1-3): Invalid use of a reserved word.
-								# W false L 22 (C 32): Parse error at ')': usage might be invalid mathematica syntax.
-								regex = /W (true|false) L (\d+) \(C (\d+)-?(\d+)?\): (.*)/
-								[_, isWarning, linenum, columnstart, columnend, message] = line.match(regex)
+								# W warning C charStart: description
+								# W true C 22: Invalid use of a reserved word.
+								# W false C 22: Parse error at ')': usage might be invalid mathematica syntax.
+								regex = /W (true|false) C (\d+): (.*)/
+								[_, isWarning, charOffset, message] = line.match(regex)
 								
-								if typeof columnend is 'undefined' then columnend = columnstart
+								position = buffer.positionForCharacterIndex(charOffset)
 								result = {
 									range: [
-										[linenum - 1, columnstart - 1],
-										[linenum - 1, columnend - 1]
+										position.toArray(),
+										position.toArray()
 									]
 									type: if isWarning is 'true' then "warning" else "error"
 									text: message
 									filePath: filePath
 								}
-								results.push result
+								if isWarning is 'true' then warnings.push result else errors.push result
+							results = errors.concat(warnings)
+							results
 						stderr: (output) ->
 							atom.notifications.addError "Failed to lint file",
 								detail: output
