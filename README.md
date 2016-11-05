@@ -6,7 +6,8 @@ This Atom package provides a [Linter](https://atom.io/packages/linter) for Wolfr
 
 *Note*: Requires Java to be installed. If needed, install [here](https://www.java.com/en/download)
 
-1. run `apm install linter-mathematica`
+1. run `apm install linter` (or follow the install instructions on [this page](https://atom.io/packages/linter))
+2. run `apm install linter-mathematica`
 
 ## Usage
 
