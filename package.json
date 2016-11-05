@@ -17,6 +17,9 @@
     "wolfram"
   ],
   "license": "MIT",
+  "dependencies": {
+    "linter": "^1.11.18"
+  },
   "optionalDependencies": {},
   "providedServices": {
     "linter": {
