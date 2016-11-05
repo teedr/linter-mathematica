@@ -2,9 +2,16 @@
 path = require 'path'
 
 module.exports =
+	config:
+		variableErrors:
+			title: 'Show Variable Warnings'
+			description: 'Enables warnings for unused arguments or local variables'
+			type: 'boolean'
+			default: false
 
 	activate: (state) ->
 		console.log 'linter-mathematica loaded.'
+		console.log atom.config.get('linter-mathematica.variableErrors')
 
 	provideLinter: ->
 		provider =
@@ -21,7 +28,7 @@ module.exports =
 					results = []
 					process = new BufferedProcess
 						command: "java"
-						args: ["-cp", path.join(__dirname, "mmparser.jar"), "FoxySheep", filePath]
+						args: ["-cp", path.join(__dirname, "mmparser.jar"), "FoxySheep", filePath, atom.config.get('linter-mathematica.variableErrors')]
 						stdout: (output) ->
 							lines = output.split('\n')
 							lines.pop()
