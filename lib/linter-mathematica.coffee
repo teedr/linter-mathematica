@@ -10,8 +10,18 @@ module.exports =
 			default: false
 
 	activate: (state) ->
+		@subscriptions = new CompositeDisposable
 		console.log 'linter-mathematica loaded.'
-		console.log atom.config.get('linter-mathematica.variableErrors')
+		@subscriptions.add atom.commands.add 'atom-text-editor',
+			'linter:toggle-variable-warnings': => @toggleVariableWarnings()
+	deactivate: ->
+		@subscriptions.dispose()
+	
+	toggleVariableWarnings: () ->
+		currentSetting = atom.config.get('linter-mathematica.variableErrors')
+		atom.config.set('linter-mathematica.variableErrors', !currentSetting)
+		editorElement = atom.views.getView(atom.workspace.getActiveTextEditor())
+		atom.commands.dispatch(atom.views.getView(editorElement), 'linter:lint')
 
 	provideLinter: ->
 		provider =
